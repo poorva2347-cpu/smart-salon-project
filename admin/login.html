@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Salon — Admin Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="adm-login-page">
+
+  <div class="adm-login-wrap">
+
+    <!-- ═══════ LEFT BRAND PANEL ═══════ -->
+    <div class="adm-login-panel">
+      <div class="adm-login-brand">
+        <img src="../logo/smart-salon-logo-white.svg" alt="Smart Salon" class="adm-login-logo" />
+        <div class="adm-login-tagline">Admin<br>Portal</div>
+        <p class="adm-login-brand-sub">Full control over appointments, barbers, services, and real-time salon analytics.</p>
+      </div>
+      <div class="adm-login-features">
+        <div class="adm-login-feat">
+          <span class="adm-login-feat-ico"><i class="fa fa-calendar-check"></i></span>
+          <span>Appointment Management</span>
+        </div>
+        <div class="adm-login-feat">
+          <span class="adm-login-feat-ico"><i class="fa fa-scissors"></i></span>
+          <span>Barber Management</span>
+        </div>
+        <div class="adm-login-feat">
+          <span class="adm-login-feat-ico"><i class="fa fa-chart-line"></i></span>
+          <span>Analytics Dashboard</span>
+        </div>
+        <div class="adm-login-feat">
+          <span class="adm-login-feat-ico"><i class="fa fa-bell"></i></span>
+          <span>Real-Time Notifications</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ RIGHT FORM AREA ═══════ -->
+    <div class="adm-login-form-area">
+      <div class="adm-login-card">
+
+        <div class="adm-login-card-top">
+          <div class="adm-login-icon-wrap">
+            <i class="fa fa-user-shield"></i>
+          </div>
+          <h1 class="adm-login-title">Smart Salon Admin Portal</h1>
+          <p class="adm-login-subtitle">Manage your salon operations from one place.</p>
+        </div>
+
+        <form id="adm-login-form" onsubmit="handleLogin(event)" novalidate>
+
+          <div class="adm-fg">
+            <label class="adm-flabel" for="adm-email">Admin Email</label>
+            <div class="adm-field-wrap">
+              <i class="fa fa-envelope adm-field-ico"></i>
+              <input
+                type="email"
+                class="adm-finput adm-finput-padded"
+                id="adm-email"
+                placeholder="admin@smartsalon.in"
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <div class="adm-fg adm-fg-last">
+            <label class="adm-flabel" for="adm-password">Password</label>
+            <div class="adm-field-wrap">
+              <i class="fa fa-lock adm-field-ico"></i>
+              <input
+                type="password"
+                class="adm-finput adm-finput-padded adm-finput-pr"
+                id="adm-password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+              />
+              <button type="button" class="adm-pw-eye" id="adm-pw-eye" onclick="togglePw()" tabindex="-1" aria-label="Toggle password visibility">
+                <i class="fa fa-eye" id="adm-eye-ico"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="adm-login-submit">
+            <i class="fa fa-right-to-bracket"></i>
+            Sign In
+          </button>
+
+        </form>
+
+        <div class="adm-login-card-foot">
+          <a href="../index.html" class="adm-back-link">
+            <i class="fa fa-arrow-left"></i>
+            Back to Customer Portal
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const API_BASE = 'http://localhost:3000';
+
+    // If already authenticated, skip the login page
+    if (localStorage.getItem('admin_token')) {
+      window.location.replace('dashboard.html');
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+
+      const email    = document.getElementById('adm-email').value.trim();
+      const password = document.getElementById('adm-password').value;
+      const btn      = document.querySelector('.adm-login-submit');
+
+      clearLoginError();
+
+      if (!email || !password) {
+        showLoginError('Email and password are required.');
+        return;
+      }
+
+      btn.disabled    = true;
+      btn.innerHTML   = '<i class="fa fa-spinner fa-spin"></i> Signing in…';
+
+      try {
+        const res  = await fetch(API_BASE + '/api/admin/login', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+          showLoginError(data.message || 'Login failed. Please try again.');
+          btn.disabled  = false;
+          btn.innerHTML = '<i class="fa fa-right-to-bracket"></i> Sign In';
+          return;
+        }
+
+        localStorage.setItem('admin_token', data.token);
+        localStorage.setItem('admin_info',  JSON.stringify(data.admin));
+        window.location.replace('dashboard.html');
+
+      } catch (err) {
+        showLoginError('Cannot connect to server. Please ensure the backend is running.');
+        btn.disabled  = false;
+        btn.innerHTML = '<i class="fa fa-right-to-bracket"></i> Sign In';
+      }
+    }
+
+    function showLoginError(msg) {
+      let el = document.getElementById('adm-login-error');
+      if (!el) {
+        el = document.createElement('p');
+        el.id = 'adm-login-error';
+        el.style.cssText = 'color:#DC2626;font-size:0.82rem;text-align:center;margin-top:12px;font-weight:500;';
+        document.querySelector('.adm-login-submit').insertAdjacentElement('afterend', el);
+      }
+      el.textContent = msg;
+    }
+
+    function clearLoginError() {
+      const el = document.getElementById('adm-login-error');
+      if (el) el.textContent = '';
+    }
+
+    function togglePw() {
+      const input = document.getElementById('adm-password');
+      const ico   = document.getElementById('adm-eye-ico');
+      if (input.type === 'password') {
+        input.type    = 'text';
+        ico.className = 'fa fa-eye-slash';
+      } else {
+        input.type    = 'password';
+        ico.className = 'fa fa-eye';
+      }
+    }
+  </script>
+
+</body>
+</html>

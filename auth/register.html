@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — Smart Salon</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../auth.css" />
+</head>
+
+<body>
+
+  <!-- ═══════ PAGE ═══════ -->
+  <main class="auth-page">
+    <div class="auth-card">
+
+      <!-- Brand -->
+      <div class="auth-brand">
+        <div class="auth-brand-logo">
+          <img src="../logo/smart-salon-logo-navy.svg" alt="Smart Salon" class="auth-logo-img" />
+        </div>
+        <div class="auth-brand-tagline">AI-Assisted Booking Platform</div>
+      </div>
+
+      <!-- Heading -->
+      <div class="auth-heading">
+        <h1 class="auth-title">Create Your Account</h1>
+        <p class="auth-subtitle">Join Smart Salon and book your next appointment with ease.</p>
+      </div>
+
+      <!-- Form -->
+      <form class="auth-form" id="register-form" novalidate>
+
+        <!-- Full Name -->
+        <div class="auth-fg" id="fg-name">
+          <label class="auth-label" for="reg-name">Full Name</label>
+          <div class="auth-input-wrap">
+            <i class="fa fa-user auth-input-icon" aria-hidden="true"></i>
+            <input
+              class="auth-input"
+              type="text"
+              id="reg-name"
+              name="full_name"
+              placeholder="Arjun Kumar"
+              autocomplete="name"
+              aria-describedby="err-name"
+              aria-required="true"
+            />
+          </div>
+          <span class="auth-error" id="err-name" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="auth-fg" id="fg-email">
+          <label class="auth-label" for="reg-email">Email Address</label>
+          <div class="auth-input-wrap">
+            <i class="fa fa-envelope auth-input-icon" aria-hidden="true"></i>
+            <input
+              class="auth-input"
+              type="email"
+              id="reg-email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              aria-describedby="err-email"
+              aria-required="true"
+            />
+          </div>
+          <span class="auth-error" id="err-email" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Phone -->
+        <div class="auth-fg" id="fg-phone">
+          <label class="auth-label" for="reg-phone">Phone Number</label>
+          <div class="auth-input-wrap">
+            <i class="fa fa-phone auth-input-icon" aria-hidden="true"></i>
+            <input
+              class="auth-input"
+              type="tel"
+              id="reg-phone"
+              name="phone"
+              placeholder="+91 98765 43210"
+              autocomplete="tel"
+              aria-describedby="err-phone"
+              aria-required="true"
+            />
+          </div>
+          <span class="auth-error" id="err-phone" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Section divider -->
+        <div class="auth-section-label">Set Password</div>
+
+        <!-- Password -->
+        <div class="auth-fg" id="fg-password">
+          <label class="auth-label" for="reg-password">Password</label>
+          <div class="auth-input-wrap">
+            <i class="fa fa-lock auth-input-icon" aria-hidden="true"></i>
+            <input
+              class="auth-input has-eye"
+              type="password"
+              id="reg-password"
+              name="password"
+              placeholder="Min. 6 characters"
+              autocomplete="new-password"
+              aria-describedby="err-password"
+              aria-required="true"
+            />
+            <button
+              type="button"
+              class="auth-eye-btn"
+              id="eye-password"
+              onclick="togglePasswordVisibility('reg-password', this)"
+              aria-label="Show password"
+            >
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+          <span class="auth-error" id="err-password" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="auth-fg" id="fg-confirm">
+          <label class="auth-label" for="reg-confirm">Confirm Password</label>
+          <div class="auth-input-wrap">
+            <i class="fa fa-lock auth-input-icon" aria-hidden="true"></i>
+            <input
+              class="auth-input has-eye"
+              type="password"
+              id="reg-confirm"
+              name="confirm_password"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+              aria-describedby="err-confirm"
+              aria-required="true"
+            />
+            <button
+              type="button"
+              class="auth-eye-btn"
+              id="eye-confirm"
+              onclick="togglePasswordVisibility('reg-confirm', this)"
+              aria-label="Show confirm password"
+            >
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+          <span class="auth-error" id="err-confirm" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="auth-btn-primary" id="register-btn">
+          Create Account
+        </button>
+
+      </form>
+
+      <!-- Footer -->
+      <div class="auth-footer">
+        <p class="auth-footer-text">
+          Already have an account?
+          <a href="login.html" class="auth-link">Sign In</a>
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="../js/auth.js"></script>
+</body>
+
+</html>

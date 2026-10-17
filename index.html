@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Salon — AI-Assisted Booking</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ═══════ NAVBAR ═══════ -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">
+      <img src="logo/smart-salon-logo-white.svg" alt="Smart Salon" class="nav-logo-white" />
+      <img src="logo/smart-salon-logo-navy.svg"  alt="Smart Salon" class="nav-logo-navy"  />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#barbers">Select Barbers</a></li>
+      <li><a href="#" onclick="openDrawer('bookings');">My Bookings</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="profile-wrap">
+        <div class="profile-trigger">
+          <div class="profile-avatar">AK</div>
+          <span id="nav-username">Arjun Kumar</span>
+          <i class="fa fa-chevron-down" style="font-size:.6rem;opacity:.7"></i>
+        </div>
+        <div class="profile-dropdown">
+          <div class="pd-header">
+            <div class="pd-name">Arjun Kumar</div>
+            <div class="pd-email">arjun@example.com</div>
+          </div>
+          <div class="pd-item" onclick="openDrawer('profile')"><i class="fa fa-user"></i>My Profile</div>
+          <div class="pd-item" onclick="openDrawer('bookings')"><i class="fa fa-calendar-check"></i>My Bookings</div>
+          <div class="pd-item" onclick="openDrawer('settings')"><i class="fa fa-gear"></i>Settings</div>
+          <div class="pd-item danger" onclick="handleLogout()"><i class="fa fa-arrow-right-from-bracket"></i>Log Out</div>
+        </div>
+      </div>
+      <button class="nav-cta" onclick="openModal()">Book Now</button>
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════ HERO ═══════ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-tag">
+        <div class="hero-tag-pulse"></div>Smart · Fast · Effortless
+      </div>
+      <h1 class="hero-title">
+        <span>Style Smarter.</span>
+        <span>Book Faster.</span>
+      </h1>
+      <p class="hero-sub">Book your salon appointment effortlessly with smart assistance and a seamless, premium
+        experience.</p>
+      <div class="hero-btns">
+        <button class="btn-hero-primary" onclick="openModal()"><i class="fa fa-calendar-plus"></i> Book
+          Appointment</button>
+        <a class="btn-hero-outline" href="#services"><i class="fa fa-scissors"></i> Explore Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ PROCESS STEPS (moved here, right after hero) ═══════ -->
+  <section id="process-steps">
+    <div class="container">
+      <div class="steps-header fu">
+        <div class="sec-label">How It Works</div>
+        <h2 class="sec-title">Book in Four Simple Steps</h2>
+      </div>
+      <div class="steps-grid fu" style="transition-delay:.1s">
+
+        <!-- Step 1 -->
+        <div class="step-card">
+          <div class="step-top-label">Step - 1</div>
+          <div class="step-icon-wrap">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 8C8 6.9 8.9 6 10 6H30C31.1 6 32 6.9 32 8V28L26 34H10C8.9 34 8 33.1 8 32V8Z" stroke="#213555"
+                stroke-width="2" stroke-linejoin="round" />
+              <path d="M26 28H32L26 34V28Z" stroke="#213555" stroke-width="2" stroke-linejoin="round" />
+              <path d="M14 14H26M14 19H26M14 24H20" stroke="#213555" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="step-title">Choose Service</div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+          <div class="step-top-label">Step - 2</div>
+          <div class="step-icon-wrap">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="14" r="6" stroke="#213555" stroke-width="2" />
+              <path d="M8 34C8 27.373 13.373 22 20 22C26.627 22 32 27.373 32 34" stroke="#213555" stroke-width="2"
+                stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="step-title">Select Barber</div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+          <div class="step-top-label">Step - 3</div>
+          <div class="step-icon-wrap">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="13" stroke="#213555" stroke-width="2" />
+              <path d="M20 12V20L25 25" stroke="#213555" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="step-title">Pick Time</div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card">
+          <div class="step-top-label">Step - 4</div>
+          <div class="step-icon-wrap">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 20L16 28L32 12" stroke="#213555" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <circle cx="20" cy="20" r="13" stroke="#213555" stroke-width="2" />
+            </svg>
+          </div>
+          <div class="step-title">Confirm</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ SERVICES ═══════ -->
+  <section id="services">
+    <div class="container">
+      <div class="services-wrap fu">
+        <div>
+          <div class="sec-label">What We Offer</div>
+          <h2 class="sec-title">Our Premium Services</h2>
+        </div>
+      </div>
+
+      <!-- Selected Services Summary Bar -->
+      <div id="svc-summary" class="svc-summary" style="display:none">
+        <div class="svc-summary-inner">
+          <div class="svc-summary-left">
+            <span class="svc-summary-label">Selected:</span>
+            <div id="svc-chips" class="svc-chips"></div>
+          </div>
+          <button class="svc-proceed-btn" onclick="proceedToBarbers()">
+            Continue to Select Barber <i class="fa fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="services-grid fu" style="transition-delay:.1s">
+
+        <!-- Haircut -->
+        <div class="svc-card" id="svc-haircut" onclick="toggleService(this,'Haircut','₹299')">
+          <div class="svc-icon-area">
+            <img src="service_images/hair_cutting.jpg" alt="Service Image">
+          </div>
+          <div class="svc-body">
+            <div class="svc-name">Haircut</div>
+            <div class="svc-desc">Classic to contemporary cuts tailored to your face shape and personal style.</div>
+            <div class="svc-price"><sup>₹</sup>299 <span>onwards</span></div>
+            <button class="svc-btn">Add Service</button>
+          </div>
+        </div>
+
+        <!-- Beard Grooming -->
+        <div class="svc-card" id="svc-beard" onclick="toggleService(this,'Beard Grooming','₹249')">
+          <div class="svc-icon-area">
+            <img src="service_images/beard_groom.jpg" alt="Service Image">
+          </div>
+          <div class="svc-body">
+            <div class="svc-name">Beard Grooming</div>
+            <div class="svc-desc">Precise shaping, trimming, and conditioning for a perfectly groomed beard.</div>
+            <div class="svc-price"><sup>₹</sup>249 <span>onwards</span></div>
+            <button class="svc-btn">Add Service</button>
+          </div>
+        </div>
+
+        <!-- Styling -->
+        <div class="svc-card" id="svc-styling" onclick="toggleService(this,'Styling','₹349')">
+          <div class="svc-icon-area">
+            <img src="service_images/hair_styling.jpg" alt="Service Image">
+          </div>
+          <div class="svc-body">
+            <div class="svc-name">Styling</div>
+            <div class="svc-desc">Professional finishing with premium products for casual to formal looks.</div>
+            <div class="svc-price"><sup>₹</sup>349 <span>onwards</span></div>
+            <button class="svc-btn">Add Service</button>
+          </div>
+        </div>
+
+        <!-- Shaving -->
+        <div class="svc-card" id="svc-shaving" onclick="toggleService(this,'Shaving','₹199')">
+          <div class="svc-icon-area">
+            <img src="service_images/shaving.jpg" alt="Service Image">
+          </div>
+          <div class="svc-body">
+            <div class="svc-name">Shaving</div>
+            <div class="svc-desc">Smooth, precise shaving with hot towel treatment for a clean and fresh finish.</div>
+            <div class="svc-price"><sup>₹</sup>199 <span>onwards</span></div>
+            <button class="svc-btn">Add Service</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ BARBERS ═══════ -->
+  <section id="barbers">
+    <div class="container">
+      <div class="barbers-header fu">
+        <div class="sec-label" style="justify-content:center">Expert Team</div>
+        <h2 class="sec-title">Meet Your Barbers</h2>
+        <p class="sec-sub" style="margin:0 auto">Skilled professionals with years of experience. Select your preferred
+          barber.</p>
+      </div>
+      <div class="barbers-grid fu" style="transition-delay:.1s">
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ CONFIRMATION ═══════ -->
+  <section id="confirmation">
+    <div class="conf-inner">
+      <div class="fu">
+        <div class="sec-label">Booking Summary</div>
+        <h2 class="sec-title">Review Your<br>Appointment</h2>
+        <p class="sec-sub">Confirm your details below. You can modify up to 2 hours before your appointment.</p>
+      </div>
+      <div class="conf-card fu" style="transition-delay:.15s">
+        <div id="conf-main">
+          <div class="conf-card-top">
+            <h3>Appointment Details</h3>
+            <p>Review before confirming</p>
+          </div>
+          <div class="conf-rows" id="conf-rows">
+            <div class="conf-row"><span class="ck">Service</span><span class="cv" id="cr-service">—</span></div>
+            <div class="conf-row"><span class="ck">Barber</span><span class="cv" id="cr-barber">—</span></div>
+            <div class="conf-row"><span class="ck">Date</span><span class="cv" id="cr-date">—</span></div>
+            <div class="conf-row"><span class="ck">Time</span><span class="cv" id="cr-time">—</span></div>
+            <div class="conf-row"><span class="ck">Total</span><span class="cv accent" id="cr-total">—</span></div>
+          </div>
+          <div class="conf-actions">
+            <button class="btn-confirm" onclick="doConfirm()">Confirm Appointment</button>
+            <button class="btn-modify" onclick="openModal()">Modify</button>
+          </div>
+        </div>
+        <div class="conf-success" id="conf-success">
+          <div class="success-circle"><i class="fa fa-check"></i></div>
+          <div class="success-title">Booking Request Sent!</div>
+          <div class="success-sub">
+            Your appointment request has been added to My Bookings.<br><br>
+            <strong style="color:var(--secondary)">Status: Pending Approval</strong><br><br>
+            The barber will review and confirm your appointment soon.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer>
+    <div class="footer-grid">
+      <div class="ft-brand">
+        <div class="ft-logo">
+          <img src="logo/smart-salon-logo-white.svg" alt="Smart Salon" class="ft-logo-img" />
+        </div>
+        <p>Where modern technology meets master craftsmanship. Redefining the grooming experience one appointment at a
+          time.</p>
+        <div class="ft-socials">
+          <a class="ft-social" href="#"><i class="fab fa-instagram"></i></a>
+          <a class="ft-social" href="#"><i class="fab fa-facebook-f"></i></a>
+          <a class="ft-social" href="#"><i class="fab fa-twitter"></i></a>
+          <a class="ft-social" href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h4>Services</h4>
+        <ul class="ft-links">
+          <li><a href="#services">Haircut</a></li>
+          <li><a href="#services">Beard Grooming</a></li>
+          <li><a href="#services">Styling</a></li>
+          <li><a href="#services">Shaving</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Company</h4>
+        <ul class="ft-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#barbers">Our Barbers</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Contact</h4>
+        <ul class="ft-links">
+          <li><a href="#"><i class="fa fa-location-dot" style="color:#5dade2;width:16px"></i> Vadodara, Gujrat</a></li>
+          <li><a href="tel:+916352001234"><i class="fa fa-phone" style="color:#5dade2;width:16px"></i> +91 63520
+              01234</a></li>
+          <li><a href="mailto:hello@smartsalon.in"><i class="fa fa-envelope" style="color:#5dade2;width:16px"></i>
+              hello@smartsalon.in</a></li>
+          <li><a href="#"><i class="fa fa-clock" style="color:#5dade2;width:16px"></i> 9 AM – 9 PM Daily</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Smart Salon. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════ FLOATING AI ASSISTANT BUTTON ═══════ -->
+  <button class="ai-fab" id="ai-fab" onclick="toggleChat()" aria-label="AI Assistant">
+    <i class="fa fa-comment-dots" id="fab-icon"></i>
+    <span class="fab-label" id="fab-label">AI Assistant</span>
+    <div class="fab-badge"></div>
+  </button>
+
+  <!-- ═══════ CHAT POPUP ═══════ -->
+  <div class="chat-popup" id="chat-popup">
+    <div class="chat-head">
+      <div class="chat-head-left">
+        <div class="chat-head-avatar"><i class="fa fa-robot"></i></div>
+        <div class="chat-head-info">
+          <div class="chat-name">AI Assistant</div>
+          <div class="chat-status">
+            <div class="chat-status-dot"></div>Online · Ready to help
+          </div>
+        </div>
+      </div>
+      <button class="chat-close" onclick="toggleChat()"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="msg bot">
+        <div class="bot-ico"><i class="fa fa-robot"></i></div>
+        <div class="bubble">Hi! 👋 I'm your Smart Salon AI Assistant. Try:<br><em>"Book 4pm haircut with Atul"</em>
+        </div>
+      </div>
+    </div>
+    <div class="chat-foot">
+      <input class="chat-input" id="chat-input" type="text" placeholder='e.g. "Book 4pm haircut with Atul"'
+        onkeydown="if(event.key==='Enter')sendMsg()" />
+      <button class="chat-send" onclick="sendMsg()"><i class="fa fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- ═══════ BOOKING MODAL ═══════ -->
+  <div class="modal-bg" id="modal-bg" onclick="outsideClose(event)">
+    <div class="modal">
+      <div class="modal-hd">
+        <div class="modal-title">Book Appointment</div>
+        <button class="modal-x" onclick="closeModal()"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd">
+        <div class="fg">
+          <label class="flabel">Services</label>
+          <div class="ea-svc-grid" id="m-services"></div>
+        </div>
+        <div class="fg">
+          <label class="flabel">Select Barber</label>
+          <select class="fselect" id="m-barber">
+            <option value="">Select a barber…</option>
+          </select>
+        </div>
+        <div class="frow">
+          <div class="fg" style="margin-bottom:0">
+            <label class="flabel">Date</label>
+            <input class="finput" type="date" id="m-date" />
+          </div>
+          <div class="fg" style="margin-bottom:0">
+            <label class="flabel">Time</label>
+            <select class="fselect" id="m-time">
+              <option>9:00 AM</option>
+              <option>10:00 AM</option>
+              <option>11:00 AM</option>
+              <option>12:00 PM</option>
+              <option>1:00 PM</option>
+              <option>2:00 PM</option>
+              <option>3:00 PM</option>
+              <option selected>4:00 PM</option>
+              <option>5:00 PM</option>
+              <option>6:00 PM</option>
+              <option>7:00 PM</option>
+              <option>8:00 PM</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-ft">
+        <button class="btn-submit" onclick="submitModal()">Proceed to Confirmation →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ EDIT PROFILE MODAL ═══════ -->
+  <div class="modal-bg modal-over-drawer" id="modal-edit-profile" onclick="outsideCloseAccountModal(event,'modal-edit-profile')">
+    <div class="modal">
+      <div class="modal-hd">
+        <div class="modal-title">Edit Profile</div>
+        <button class="modal-x" onclick="closeAccountModal('modal-edit-profile')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd">
+        <div class="ep-photo-wrap">
+          <div class="ep-avatar-lg">AK</div>
+          <button class="ep-photo-btn" title="Change photo">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+            </svg>
+          </button>
+        </div>
+        <div class="fg">
+          <label class="flabel">Full Name</label>
+          <input class="finput" type="text" id="ep-name" value="Arjun Kumar" />
+        </div>
+        <div class="fg">
+          <label class="flabel">Email Address</label>
+          <input class="finput" type="email" id="ep-email" readonly style="opacity:.6;cursor:default" />
+        </div>
+        <div class="fg" style="margin-bottom:0">
+          <label class="flabel">Phone Number</label>
+          <input class="finput" type="tel" id="ep-phone" value="+91 98765 43210" />
+        </div>
+      </div>
+      <div class="modal-ft">
+        <div class="modal-actions">
+          <button class="btn-modify" onclick="closeAccountModal('modal-edit-profile')">Cancel</button>
+          <button class="btn-submit" style="flex:1" onclick="saveProfile()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ CHANGE PASSWORD MODAL ═══════ -->
+  <div class="modal-bg modal-over-drawer" id="modal-change-password" onclick="outsideCloseAccountModal(event,'modal-change-password')">
+    <div class="modal">
+      <div class="modal-hd">
+        <div class="modal-title">Change Password</div>
+        <button class="modal-x" onclick="closeAccountModal('modal-change-password')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd">
+        <div class="fg">
+          <label class="flabel">Current Password</label>
+          <input class="finput" type="password" id="cp-current" placeholder="Enter current password" />
+        </div>
+        <div class="fg">
+          <label class="flabel">New Password</label>
+          <input class="finput" type="password" id="cp-new" placeholder="Enter new password" />
+        </div>
+        <div class="fg" style="margin-bottom:0">
+          <label class="flabel">Confirm New Password</label>
+          <input class="finput" type="password" id="cp-confirm" placeholder="Re-enter new password" />
+        </div>
+      </div>
+      <div class="modal-ft">
+        <div class="modal-actions">
+          <button class="btn-modify" onclick="closeAccountModal('modal-change-password')">Cancel</button>
+          <button class="btn-submit" style="flex:1" onclick="changePassword()">Update Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ DELETE ACCOUNT MODAL ═══════ -->
+  <div class="modal-bg modal-over-drawer" id="modal-delete-account" onclick="outsideCloseAccountModal(event,'modal-delete-account')">
+    <div class="modal" style="max-width:420px">
+      <div class="modal-hd">
+        <div class="modal-title">Delete Account</div>
+        <button class="modal-x" onclick="closeAccountModal('modal-delete-account')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd">
+        <div class="del-warn">
+          <div class="del-warn-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <p>Are you sure you want to permanently delete your account? All your bookings and data will be removed and this action <strong>cannot be undone</strong>.</p>
+        </div>
+      </div>
+      <div class="modal-ft">
+        <div class="modal-actions">
+          <button class="btn-submit" style="flex:1" onclick="closeAccountModal('modal-delete-account')">Keep Account</button>
+          <button class="btn-delete-account" onclick="closeAccountModal('modal-delete-account')">Delete Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ NOTIFICATIONS MODAL ═══════ -->
+  <div class="modal-bg modal-over-drawer" id="modal-notifications" onclick="outsideCloseAccountModal(event,'modal-notifications')">
+    <div class="modal" style="max-width:520px">
+      <div class="modal-hd">
+        <div class="modal-title">Notifications</div>
+        <button class="modal-x" onclick="closeAccountModal('modal-notifications')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd" style="padding-top:12px;padding-bottom:12px;max-height:60vh;overflow-y:auto">
+        <div class="notif-header" style="margin-bottom:12px">
+          <span style="font-family:'Poppins',sans-serif;font-size:0.8rem;font-weight:500;color:var(--text-mid)">All notifications</span>
+          <button class="notif-mark-all-btn" id="notif-mark-all-btn" onclick="markAllRead()">Mark all read</button>
+        </div>
+        <div id="notif-list" class="notif-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ EDIT APPOINTMENT MODAL ═══════ -->
+  <div class="modal-bg modal-over-drawer" id="modal-edit-appointment" onclick="outsideCloseAccountModal(event,'modal-edit-appointment')">
+    <div class="modal">
+      <div class="modal-hd">
+        <div class="modal-title">Edit Appointment</div>
+        <button class="modal-x" onclick="closeAccountModal('modal-edit-appointment')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd">
+        <div class="fg">
+          <label class="flabel">Services</label>
+          <div class="ea-svc-grid" id="ea-services"></div>
+        </div>
+        <div class="fg">
+          <label class="flabel">Barber</label>
+          <select class="fselect" id="ea-barber"></select>
+        </div>
+        <div class="frow">
+          <div class="fg" style="margin-bottom:0">
+            <label class="flabel">Date</label>
+            <input class="finput" type="date" id="ea-date" />
+          </div>
+          <div class="fg" style="margin-bottom:0">
+            <label class="flabel">Time</label>
+            <select class="fselect" id="ea-time"></select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-ft">
+        <div class="modal-actions">
+          <button class="btn-modify" onclick="closeAccountModal('modal-edit-appointment')">Cancel</button>
+          <button class="btn-submit" style="flex:1" onclick="saveEditedAppointment()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ CANCEL APPOINTMENT MODAL ═══════ -->
+  <div class="modal-bg modal-over-drawer" id="modal-cancel-appointment" onclick="outsideCloseAccountModal(event,'modal-cancel-appointment')">
+    <div class="modal" style="max-width:420px">
+      <div class="modal-hd">
+        <div class="modal-title">Cancel Appointment</div>
+        <button class="modal-x" onclick="closeAccountModal('modal-cancel-appointment')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd">
+        <div class="del-warn">
+          <div class="del-warn-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+          </div>
+          <p>Are you sure you want to cancel this appointment?</p>
+          <p style="margin-top:8px;font-size:0.82rem;color:var(--text-mid)">Cancelled appointments remain visible in your booking history.</p>
+        </div>
+      </div>
+      <div class="modal-ft">
+        <div class="modal-actions">
+          <button class="btn-submit" style="flex:1" onclick="closeAccountModal('modal-cancel-appointment')">Keep Appointment</button>
+          <button class="btn-delete-account" onclick="confirmCancelAppointment()">Cancel Appointment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ VIEW DETAILS MODAL ═══════ -->
+  <div class="modal-bg modal-over-drawer" id="modal-view-details" onclick="outsideCloseAccountModal(event,'modal-view-details')">
+    <div class="modal" style="max-width:420px">
+      <div class="modal-hd">
+        <div class="modal-title">Appointment Details</div>
+        <button class="modal-x" onclick="closeAccountModal('modal-view-details')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd" id="vd-content" style="padding-top:16px;padding-bottom:8px"></div>
+      <div class="modal-ft">
+        <button class="btn-submit" onclick="closeAccountModal('modal-view-details')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ BOOKING HISTORY MODAL ═══════ -->
+  <div class="modal-bg modal-over-drawer" id="modal-booking-history" onclick="outsideCloseAccountModal(event,'modal-booking-history')">
+    <div class="modal" style="max-width:520px">
+      <div class="modal-hd">
+        <div class="modal-title">Booking History</div>
+        <button class="modal-x" onclick="closeAccountModal('modal-booking-history')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd" style="padding-top:12px;padding-bottom:12px;max-height:60vh;overflow-y:auto">
+        <div id="bk-history-list" class="bk-list"></div>
+      </div>
+      <div class="modal-ft">
+        <button class="btn-submit" onclick="closeAccountModal('modal-booking-history')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ DECLINE RESCHEDULE MODAL ═══════ -->
+  <div class="modal-bg modal-over-drawer" id="modal-decline-reschedule" onclick="outsideCloseAccountModal(event,'modal-decline-reschedule')">
+    <div class="modal" style="max-width:420px">
+      <div class="modal-hd">
+        <div class="modal-title">Decline Reschedule?</div>
+        <button class="modal-x" onclick="closeAccountModal('modal-decline-reschedule')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-bd">
+        <div class="del-warn">
+          <div class="del-warn-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <p>Declining will cancel your appointment. Are you sure you want to decline the barber's proposed time?</p>
+        </div>
+      </div>
+      <div class="modal-ft">
+        <div class="modal-actions">
+          <button class="btn-submit" style="flex:1" onclick="closeAccountModal('modal-decline-reschedule')">Keep Appointment</button>
+          <button class="btn-delete-account" onclick="confirmDeclineReschedule()">Decline &amp; Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ DRAWER OVERLAY ═══════ -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+
+  <!-- ═══════ SIDE DRAWER ═══════ -->
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Account panel">
+
+    <!-- Header -->
+    <div class="drawer-hd">
+      <div class="drawer-hd-top">
+        <span class="drawer-title">Account</span>
+        <button class="drawer-close-btn" onclick="closeDrawer()" aria-label="Close panel">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="drawer-tabs" role="tablist">
+        <button class="drawer-tab active" role="tab" data-tab="profile" onclick="switchDrawerTab('profile')">My Profile</button>
+        <button class="drawer-tab" role="tab" data-tab="bookings" onclick="switchDrawerTab('bookings')">My Bookings</button>
+        <button class="drawer-tab" role="tab" data-tab="settings" onclick="switchDrawerTab('settings')">Settings</button>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="drawer-body">
+
+      <!-- ── MY PROFILE ── -->
+      <div class="drawer-pane active" id="pane-profile" role="tabpanel">
+        <div class="dp-avatar">AK</div>
+        <div class="dp-name">Arjun Kumar</div>
+        <div class="dp-email-label">arjun@example.com</div>
+        <div class="dp-fields">
+          <div class="dp-field">
+            <div class="dp-field-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="dp-field-content">
+              <div class="dp-field-label">Full Name</div>
+              <div class="dp-field-value" id="dp-field-name">Arjun Kumar</div>
+            </div>
+          </div>
+          <div class="dp-field">
+            <div class="dp-field-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.38a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="dp-field-content">
+              <div class="dp-field-label">Mobile</div>
+              <div class="dp-field-value" id="dp-field-phone">+91 98765 43210</div>
+            </div>
+          </div>
+          <div class="dp-field">
+            <div class="dp-field-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="dp-field-content">
+              <div class="dp-field-label">Email</div>
+              <div class="dp-field-value" id="dp-field-email">arjun@example.com</div>
+            </div>
+          </div>
+        </div>
+        <button class="dp-edit-btn" onclick="openEditProfileModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          Edit Profile
+        </button>
+
+        <!-- Recent Notifications -->
+        <div class="pn-section">
+          <div class="pn-section-hd">
+            <span class="set-section-label" style="margin-bottom:0">Recent Notifications</span>
+          </div>
+          <div id="profile-recent-notifs" class="pn-list"></div>
+          <button class="pn-view-all-btn" onclick="openNotificationsModal()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            View All Notifications
+          </button>
+        </div>
+      </div>
+
+      <!-- ── MY BOOKINGS ── -->
+      <div class="drawer-pane" id="pane-bookings" role="tabpanel">
+        <div id="bk-empty" class="bk-empty">
+          <div class="bk-empty-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--secondary)">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <div class="bk-empty-title">No bookings yet</div>
+          <div class="bk-empty-sub">Your confirmed appointments will appear here.</div>
+        </div>
+        <!-- Active bookings: pending + confirmed, newest first -->
+        <div id="bk-active-section" style="display:none">
+          <div class="set-section-label">Active Bookings</div>
+          <div id="bk-list" class="bk-list"></div>
+          <div id="bk-no-active" class="bk-no-active" style="display:none">No upcoming appointments.</div>
+        </div>
+
+        <!-- Booking history preview: last 3 completed/cancelled -->
+        <div id="bk-history-section" class="bh-section" style="display:none">
+          <div class="bh-section-hd">
+            <span class="set-section-label" style="margin-bottom:0">Booking History</span>
+          </div>
+          <div id="bk-history-preview" class="bh-list"></div>
+          <button class="bh-view-all-btn" onclick="openBookingHistoryModal()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 9 15"/></svg>
+            View Full History
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ── SETTINGS ── -->
+      <div class="drawer-pane" id="pane-settings" role="tabpanel">
+        <div class="set-section-label">Account</div>
+        <div class="set-list">
+          <div class="set-item" onclick="openChangePasswordModal()">
+            <div class="set-item-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <div class="set-item-content">
+              <div class="set-item-title">Change Password</div>
+              <div class="set-item-sub">Update your account password</div>
+            </div>
+            <svg class="set-item-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+        <div class="set-section-label">Danger Zone</div>
+        <div class="set-list">
+          <div class="set-item danger" onclick="openDeleteAccountModal()">
+            <div class="set-item-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+              </svg>
+            </div>
+            <div class="set-item-content">
+              <div class="set-item-title">Delete Account</div>
+              <div class="set-item-sub">Permanently remove your account and data</div>
+            </div>
+            <svg class="set-item-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.drawer-body -->
+
+    <!-- Footer: Logout -->
+    <div class="drawer-ft">
+      <button class="drawer-logout-btn" onclick="handleLogout()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Log Out
+      </button>
+    </div>
+
+  </div><!-- /.drawer -->
+
+  <div id="ss-toast" class="ss-toast"></div>
+  <script src="js/config.js"></script>
+  <script src="js/prompts.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+
+</html>

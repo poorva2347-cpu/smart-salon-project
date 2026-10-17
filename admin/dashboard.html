@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Salon — Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- ═══════ NAVBAR ═══════ -->
+  <nav id="adm-navbar">
+    <div class="adm-nav-left">
+      <a href="#" class="adm-nav-logo">
+        <img src="../logo/smart-salon-logo-navy.svg" alt="Smart Salon" class="adm-logo-img" />
+      </a>
+      <div class="adm-nav-divider"></div>
+      <div class="adm-salon-status-wrap">
+        <span class="adm-status-label">Salon Status</span>
+        <label class="adm-toggle-switch">
+          <input type="checkbox" id="salon-status-toggle" checked />
+          <span class="adm-toggle-slider"></span>
+        </label>
+        <span class="adm-status-badge" id="adm-status-badge">
+          <span class="adm-status-dot open" id="adm-status-dot"></span>
+          <span id="adm-status-text">Salon Open</span>
+        </span>
+      </div>
+    </div>
+    <div class="adm-nav-right">
+      <button class="adm-notif-btn" id="adm-notif-btn" aria-label="Notifications" onclick="switchSection('notifications-section')">
+        <i class="fa fa-bell"></i>
+        <span class="adm-notif-badge" id="adm-notif-count" style="display:none">0</span>
+      </button>
+      <div class="adm-admin-profile">
+        <div class="adm-admin-avatar" id="adm-nav-avatar">AD</div>
+        <div class="adm-admin-info">
+          <div class="adm-admin-name" id="adm-nav-name">Admin</div>
+          <div class="adm-admin-role">Salon Owner</div>
+        </div>
+        <i class="fa fa-chevron-down" style="font-size:.55rem;opacity:.5;margin-left:2px"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════ LAYOUT WRAPPER ═══════ -->
+  <div class="adm-wrapper">
+
+    <!-- ═══════ SIDEBAR ═══════ -->
+    <aside id="adm-sidebar">
+      <nav class="adm-sidebar-nav">
+        <ul class="adm-nav-menu">
+          <li>
+            <button class="adm-nav-item active" data-section="dashboard-section">
+              <i class="fa fa-gauge-high"></i>
+              <span>Dashboard</span>
+            </button>
+          </li>
+          <li>
+            <button class="adm-nav-item" data-section="appointments-section">
+              <i class="fa fa-calendar-check"></i>
+              <span>Appointments</span>
+            </button>
+          </li>
+          <li>
+            <button class="adm-nav-item" data-section="barbers-section">
+              <i class="fa fa-scissors"></i>
+              <span>Barbers</span>
+            </button>
+          </li>
+          <li>
+            <button class="adm-nav-item" data-section="services-section">
+              <i class="fa fa-list-check"></i>
+              <span>Services</span>
+            </button>
+          </li>
+          <li>
+            <button class="adm-nav-item" data-section="notifications-section">
+              <i class="fa fa-bell"></i>
+              <span>Notifications</span>
+              <span class="adm-nav-badge" id="adm-sidebar-notif-badge" style="display:none">0</span>
+            </button>
+          </li>
+          <li>
+            <button class="adm-nav-item" data-section="settings-section">
+              <i class="fa fa-gear"></i>
+              <span>Settings</span>
+            </button>
+          </li>
+        </ul>
+        <div class="adm-sidebar-footer">
+          <button class="adm-logout-btn">
+            <i class="fa fa-arrow-right-from-bracket"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- ═══════ MAIN CONTENT ═══════ -->
+    <main id="adm-main">
+
+      <!-- ══════════════════════════════
+           DASHBOARD SECTION
+      ══════════════════════════════ -->
+      <section id="dashboard-section" class="adm-section active">
+
+        <div class="adm-section-header">
+          <div>
+            <h1 class="adm-page-title">Welcome Back, Admin 👋</h1>
+            <p class="adm-page-sub">Here's what's happening at your salon today.</p>
+          </div>
+          <div class="adm-header-status-badge" id="dash-salon-badge">
+            <span class="adm-status-dot open" id="dash-dot"></span>
+            <span id="dash-salon-text">Salon Open</span>
+          </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="adm-kpi-grid">
+          <div class="adm-kpi-card">
+            <div class="adm-kpi-icon kpi-primary">
+              <i class="fa fa-calendar-check"></i>
+            </div>
+            <div class="adm-kpi-body">
+              <div class="adm-kpi-label">Total Appointments</div>
+              <div class="adm-kpi-value" id="kpi-total-bookings">—</div>
+              <div class="adm-kpi-change neutral"><i class="fa fa-database"></i> All time</div>
+            </div>
+          </div>
+          <div class="adm-kpi-card">
+            <div class="adm-kpi-icon kpi-success">
+              <i class="fa fa-clock"></i>
+            </div>
+            <div class="adm-kpi-body">
+              <div class="adm-kpi-label">Today's Appointments</div>
+              <div class="adm-kpi-value" id="kpi-today-appointments">—</div>
+              <div class="adm-kpi-change neutral"><i class="fa fa-calendar-day"></i> Today</div>
+            </div>
+          </div>
+          <div class="adm-kpi-card">
+            <div class="adm-kpi-icon kpi-warning">
+              <i class="fa fa-hourglass-half"></i>
+            </div>
+            <div class="adm-kpi-body">
+              <div class="adm-kpi-label">Pending Appointments</div>
+              <div class="adm-kpi-value" id="kpi-pending">—</div>
+              <div class="adm-kpi-change neutral"><i class="fa fa-clock-rotate-left"></i> Awaiting action</div>
+            </div>
+          </div>
+          <div class="adm-kpi-card">
+            <div class="adm-kpi-icon kpi-secondary">
+              <i class="fa fa-scissors"></i>
+            </div>
+            <div class="adm-kpi-body">
+              <div class="adm-kpi-label">Active Barbers</div>
+              <div class="adm-kpi-value" id="kpi-active-barbers">—</div>
+              <div class="adm-kpi-change neutral"><i class="fa fa-circle-check"></i> On team</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="adm-charts-row">
+
+          <!-- Weekly Appointments (Vertical Bar Chart) -->
+          <div class="adm-card adm-chart-card">
+            <div class="adm-card-header">
+              <h3 class="adm-card-title">Weekly Appointments</h3>
+              <span class="adm-card-badge">This week</span>
+            </div>
+            <div class="adm-vbar-chart" id="weekly-chart-container">
+              <div class="adm-vbar-group" style="flex:1;align-items:center;justify-content:center">
+                <span class="adm-cell-sub" style="font-style:italic">Loading…</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Services (Horizontal Bar Chart) -->
+          <div class="adm-card adm-chart-card">
+            <div class="adm-card-header">
+              <h3 class="adm-card-title">Top Services</h3>
+              <span class="adm-card-badge">By bookings</span>
+            </div>
+            <div class="adm-hbar-chart" id="top-services-chart">
+              <div class="adm-hbar-row" style="justify-content:center">
+                <span class="adm-cell-sub" style="font-style:italic">Loading…</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Row -->
+        <div class="adm-bottom-row">
+
+          <!-- Top Performing Barbers -->
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <h3 class="adm-card-title">Top Performing Barbers</h3>
+              <span class="adm-card-badge">By jobs completed</span>
+            </div>
+            <div class="adm-barber-list" id="top-barbers-list">
+              <div class="adm-barber-row" style="justify-content:center">
+                <span class="adm-cell-sub" style="font-style:italic">Loading…</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <h3 class="adm-card-title">Recent Activity</h3>
+              <span class="adm-card-badge">Latest first</span>
+            </div>
+            <div class="adm-activity-list" id="recent-activity-list">
+              <div class="adm-activity-item" style="justify-content:center">
+                <span class="adm-cell-sub" style="font-style:italic">Loading…</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════
+           APPOINTMENTS SECTION
+      ══════════════════════════════ -->
+      <section id="appointments-section" class="adm-section">
+        <div class="adm-section-header">
+          <div>
+            <h1 class="adm-page-title">Appointments</h1>
+            <p class="adm-page-sub">Manage and track all salon appointments.</p>
+          </div>
+        </div>
+
+        <div class="adm-card">
+          <div class="adm-table-controls">
+            <div class="adm-search-wrap">
+              <i class="fa fa-search adm-search-icon"></i>
+              <input type="text" class="adm-search-input" id="appt-search" placeholder="Search by customer, barber, service or ID…" oninput="_onApptSearch()" />
+            </div>
+            <select class="adm-filter-select" id="appt-filter" onchange="loadAppointments()">
+              <option value="all">All Status</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <select class="adm-filter-select" id="appt-sort" onchange="loadAppointments()">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="appointment_date">By Appointment Date</option>
+              <option value="customer_name">By Customer Name</option>
+            </select>
+          </div>
+          <div class="adm-table-wrap">
+            <table class="adm-table" id="appointments-table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Service</th>
+                  <th>Barber</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="appt-tbody">
+              </tbody>
+            </table>
+          </div>
+          <div id="appt-empty" class="adm-empty-state" style="display:none">
+            <div class="adm-empty-ico"><i class="fa fa-calendar-xmark"></i></div>
+            <div class="adm-empty-title">No appointments found</div>
+            <div class="adm-empty-sub">No appointments match your current filter or search.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════
+           BARBERS SECTION
+      ══════════════════════════════ -->
+      <section id="barbers-section" class="adm-section">
+        <div class="adm-section-header">
+          <div>
+            <h1 class="adm-page-title">Barbers</h1>
+            <p class="adm-page-sub">Manage your team of professional barbers.</p>
+          </div>
+          <button class="adm-primary-btn" onclick="openAddBarber()">
+            <i class="fa fa-plus"></i> Add Barber
+          </button>
+        </div>
+
+        <div class="adm-card">
+          <div class="adm-table-wrap">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Name</th>
+                  <th>Specialisation</th>
+                  <th>Today's Jobs</th>
+                  <th>Rating</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="barbers-tbody">
+              </tbody>
+            </table>
+          </div>
+          <div id="barbers-empty" class="adm-empty-state" style="display:none">
+            <div class="adm-empty-ico"><i class="fa fa-scissors"></i></div>
+            <div class="adm-empty-title">No barbers added yet</div>
+            <div class="adm-empty-sub">Use the <strong>Add Barber</strong> button above to create your first team member.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════
+           SERVICES SECTION
+      ══════════════════════════════ -->
+      <section id="services-section" class="adm-section">
+        <div class="adm-section-header">
+          <div>
+            <h1 class="adm-page-title">Services</h1>
+            <p class="adm-page-sub">Manage all salon services and pricing.</p>
+          </div>
+          <button class="adm-primary-btn" onclick="openAddService()">
+            <i class="fa fa-plus"></i> Add Service
+          </button>
+        </div>
+
+        <div class="adm-card">
+          <div class="adm-table-wrap">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>Service Name</th>
+                  <th>Duration</th>
+                  <th>Price</th>
+                  <th>Bookings</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="services-tbody">
+              </tbody>
+            </table>
+          </div>
+          <div id="services-empty" class="adm-empty-state" style="display:none">
+            <div class="adm-empty-ico"><i class="fa fa-list-check"></i></div>
+            <div class="adm-empty-title">No services added yet</div>
+            <div class="adm-empty-sub">Use the <strong>Add Service</strong> button above to create your first service.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════
+           NOTIFICATIONS SECTION
+      ══════════════════════════════ -->
+      <section id="notifications-section" class="adm-section">
+        <div class="adm-section-header">
+          <div>
+            <h1 class="adm-page-title">Notifications</h1>
+            <p class="adm-page-sub">All salon activity and alerts in one place.</p>
+          </div>
+          <button class="adm-outline-btn" onclick="markAllAdminRead()">
+            <i class="fa fa-check-double"></i> Mark All Read
+          </button>
+        </div>
+
+        <div class="adm-card adm-notif-card">
+          <div id="adm-notif-dynamic-feed">
+            <div style="padding:40px;text-align:center;color:var(--adm-text-mid)">
+              <i class="fa fa-spinner fa-spin" style="margin-right:8px"></i>Loading…
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════
+           SETTINGS SECTION
+      ══════════════════════════════ -->
+      <section id="settings-section" class="adm-section">
+        <div class="adm-section-header">
+          <div>
+            <h1 class="adm-page-title">Settings</h1>
+            <p class="adm-page-sub">Configure your salon and account details.</p>
+          </div>
+        </div>
+
+        <div class="adm-settings-grid">
+
+          <!-- Salon Details -->
+          <div class="adm-card adm-settings-card">
+            <div class="adm-card-header">
+              <h3 class="adm-card-title">Salon Details</h3>
+            </div>
+            <div class="adm-settings-form">
+              <div class="adm-fg">
+                <label class="adm-flabel">Salon Name</label>
+                <input type="text" class="adm-finput" value="Smart Salon" />
+              </div>
+              <div class="adm-fg">
+                <label class="adm-flabel">Phone Number</label>
+                <input type="tel" class="adm-finput" value="+91 63520 01234" />
+              </div>
+              <div class="adm-fg">
+                <label class="adm-flabel">Email Address</label>
+                <input type="email" class="adm-finput" value="hello@smartsalon.in" />
+              </div>
+              <div class="adm-fg" style="margin-bottom:0">
+                <label class="adm-flabel">Address</label>
+                <input type="text" class="adm-finput" value="Vadodara, Gujarat" />
+              </div>
+            </div>
+            <div class="adm-settings-footer">
+              <button class="adm-primary-btn full-w">Save Salon Details</button>
+            </div>
+          </div>
+
+          <!-- Operating Hours -->
+          <div class="adm-card adm-settings-card">
+            <div class="adm-card-header">
+              <h3 class="adm-card-title">Operating Hours</h3>
+            </div>
+            <div class="adm-settings-form">
+              <div class="adm-fg">
+                <label class="adm-flabel">Opening Time</label>
+                <input type="time" class="adm-finput" value="09:00" />
+              </div>
+              <div class="adm-fg">
+                <label class="adm-flabel">Closing Time</label>
+                <input type="time" class="adm-finput" value="21:00" />
+              </div>
+              <div class="adm-fg" style="margin-bottom:0">
+                <label class="adm-flabel">Working Days</label>
+                <select class="adm-finput">
+                  <option selected>Monday – Sunday (All Days)</option>
+                  <option>Monday – Saturday</option>
+                  <option>Monday – Friday</option>
+                </select>
+              </div>
+            </div>
+            <div class="adm-settings-footer">
+              <button class="adm-primary-btn full-w">Save Hours</button>
+            </div>
+          </div>
+
+          <!-- Admin Account -->
+          <div class="adm-card adm-settings-card">
+            <div class="adm-card-header">
+              <h3 class="adm-card-title">Admin Account</h3>
+            </div>
+            <div class="adm-settings-form">
+              <div class="adm-fg">
+                <label class="adm-flabel" for="settings-admin-name">Admin Name <span class="adm-req">*</span></label>
+                <input type="text" class="adm-finput" id="settings-admin-name" placeholder="Your name" autocomplete="name" />
+                <span class="adm-field-error" id="err-settings-name"></span>
+              </div>
+              <div class="adm-fg" style="margin-bottom:0">
+                <label class="adm-flabel" for="settings-admin-email">Admin Email <span class="adm-req">*</span></label>
+                <input type="email" class="adm-finput" id="settings-admin-email" placeholder="admin@smartsalon.in" autocomplete="email" />
+                <span class="adm-field-error" id="err-settings-email"></span>
+              </div>
+            </div>
+            <div class="adm-settings-footer">
+              <button class="adm-primary-btn full-w" id="settings-profile-btn" style="margin-bottom:10px" onclick="saveAdminProfile()">Save Account Details</button>
+              <button class="adm-outline-btn full-w" onclick="openChangePwModal()">
+                <i class="fa fa-lock"></i> Change Password
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ═══════ FLOATING AI ASSISTANT ═══════ -->
+  <button class="adm-ai-fab" id="adm-ai-fab" onclick="toggleAdminAI()" aria-label="AI Admin Assistant">
+    <i class="fa fa-comment-dots" id="adm-fab-icon"></i>
+    <span class="adm-fab-label" id="adm-fab-label">Admin Assistant</span>
+    <div class="adm-fab-badge"></div>
+  </button>
+
+  <!-- AI Chat Popup -->
+  <div class="adm-chat-popup" id="adm-chat-popup">
+    <div class="adm-chat-head">
+      <div class="adm-chat-head-left">
+        <div class="adm-chat-avatar"><i class="fa fa-robot"></i></div>
+        <div class="adm-chat-info">
+          <div class="adm-chat-name">Smart Salon Admin Assistant</div>
+          <div class="adm-chat-status"><div class="adm-chat-dot"></div>Online · Ready</div>
+        </div>
+      </div>
+      <button class="adm-chat-close" onclick="toggleAdminAI()"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="adm-chat-body" id="adm-chat-body">
+      <div class="adm-msg bot">
+        <div class="adm-bot-ico"><i class="fa fa-robot"></i></div>
+        <div class="adm-bubble">Hi Admin! 👋 I can help you navigate, open forms, and answer questions. Try:<br><em>"Open Services"</em><br><em>"Add barber"</em><br><em>"How many appointments today?"</em></div>
+      </div>
+    </div>
+    <div class="adm-chat-foot">
+      <input class="adm-chat-input" id="adm-chat-input" type="text" placeholder='e.g. "How many active barbers?"' onkeydown="if(event.key==='Enter')sendAdminAIMsg()" />
+      <button class="adm-chat-send" onclick="sendAdminAIMsg()"><i class="fa fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- ═══════ ADD / EDIT BARBER MODAL ═══════ -->
+  <div class="adm-modal-bg" id="modal-barber" onclick="closeAdmModal('modal-barber', event)">
+    <div class="adm-modal">
+      <div class="adm-modal-hd">
+        <h3 class="adm-modal-title" id="modal-barber-title">Add Barber</h3>
+        <button class="adm-modal-close" onclick="closeAdmModal('modal-barber')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="adm-modal-bd">
+        <div class="adm-fg">
+          <label class="adm-flabel" for="barber-name">Barber Name <span class="adm-req">*</span></label>
+          <input type="text" class="adm-finput" id="barber-name" placeholder="e.g. Atul Sharma" />
+          <span class="adm-field-error" id="err-barber-name">Name is required</span>
+        </div>
+        <div class="adm-modal-row">
+          <div class="adm-fg">
+            <label class="adm-flabel" for="barber-email">Email <span class="adm-req">*</span></label>
+            <input type="email" class="adm-finput" id="barber-email" placeholder="email@smartsalon.in" />
+            <span class="adm-field-error" id="err-barber-email">Email is required</span>
+          </div>
+          <div class="adm-fg">
+            <label class="adm-flabel" for="barber-phone">Phone Number <span class="adm-req">*</span></label>
+            <input type="tel" class="adm-finput" id="barber-phone" placeholder="+91 00000 00000" />
+            <span class="adm-field-error" id="err-barber-phone">Phone is required</span>
+          </div>
+        </div>
+        <div class="adm-modal-row">
+          <div class="adm-fg">
+            <label class="adm-flabel" for="barber-spec">Specialization <span class="adm-req">*</span></label>
+            <input type="text" class="adm-finput" id="barber-spec" placeholder="e.g. Haircut · Beard" />
+            <span class="adm-field-error" id="err-barber-spec">Specialization is required</span>
+          </div>
+          <div class="adm-fg">
+            <label class="adm-flabel" for="barber-exp">Experience (Years)</label>
+            <input type="number" class="adm-finput" id="barber-exp" placeholder="e.g. 5" min="0" max="50" />
+          </div>
+        </div>
+        <div class="adm-fg" id="barber-pw-wrap">
+          <label class="adm-flabel" for="barber-password">Initial Password <span class="adm-req">*</span></label>
+          <div class="adm-field-wrap">
+            <input type="password" class="adm-finput adm-finput-pr" id="barber-password" placeholder="Set a temporary password" autocomplete="new-password" />
+            <button type="button" class="adm-pw-eye" onclick="toggleBarberPw()" tabindex="-1" aria-label="Toggle password visibility">
+              <i class="fa fa-eye" id="barber-pw-eye-ico"></i>
+            </button>
+          </div>
+          <span class="adm-field-error" id="err-barber-password">Password is required</span>
+        </div>
+        <div class="adm-fg" style="margin-bottom:0">
+          <label class="adm-flabel" for="barber-status">Status</label>
+          <select class="adm-finput" id="barber-status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+      <div class="adm-modal-ft">
+        <button class="adm-outline-btn" onclick="closeAdmModal('modal-barber')">Cancel</button>
+        <button class="adm-primary-btn" id="modal-barber-save" onclick="saveBarber()"><i class="fa fa-check"></i> Save Barber</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ ADD / EDIT SERVICE MODAL ═══════ -->
+  <div class="adm-modal-bg" id="modal-service" onclick="closeAdmModal('modal-service', event)">
+    <div class="adm-modal">
+      <div class="adm-modal-hd">
+        <h3 class="adm-modal-title" id="modal-service-title">Add Service</h3>
+        <button class="adm-modal-close" onclick="closeAdmModal('modal-service')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="adm-modal-bd">
+        <div class="adm-fg">
+          <label class="adm-flabel" for="svc-name">Service Name <span class="adm-req">*</span></label>
+          <input type="text" class="adm-finput" id="svc-name" placeholder="e.g. Haircut" />
+          <span class="adm-field-error" id="err-svc-name">Name is required</span>
+        </div>
+        <div class="adm-modal-row">
+          <div class="adm-fg">
+            <label class="adm-flabel" for="svc-duration">Duration <span class="adm-req">*</span></label>
+            <select class="adm-finput" id="svc-duration">
+              <option value="15">15 min</option>
+              <option value="20">20 min</option>
+              <option value="25">25 min</option>
+              <option value="30" selected>30 min</option>
+              <option value="45">45 min</option>
+              <option value="60">60 min</option>
+              <option value="90">90 min</option>
+            </select>
+          </div>
+          <div class="adm-fg">
+            <label class="adm-flabel" for="svc-price">Price (₹) <span class="adm-req">*</span></label>
+            <input type="number" class="adm-finput" id="svc-price" placeholder="e.g. 299" min="0.01" step="0.01" />
+            <span class="adm-field-error" id="err-svc-price">Valid price is required</span>
+          </div>
+        </div>
+        <div class="adm-fg">
+          <label class="adm-flabel" for="svc-desc">Description</label>
+          <textarea class="adm-finput" id="svc-desc" placeholder="Brief description of this service..." rows="3" style="resize:vertical;min-height:72px;line-height:1.55"></textarea>
+        </div>
+        <div class="adm-fg" style="margin-bottom:0">
+          <label class="adm-flabel" for="svc-status">Status</label>
+          <select class="adm-finput" id="svc-status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+      <div class="adm-modal-ft">
+        <button class="adm-outline-btn" onclick="closeAdmModal('modal-service')">Cancel</button>
+        <button class="adm-primary-btn" id="modal-service-save" onclick="saveService()"><i class="fa fa-check"></i> Save Service</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ APPOINTMENT DETAIL MODAL ═══════ -->
+  <div class="adm-modal-bg" id="modal-appt-detail" onclick="closeAdmModal('modal-appt-detail', event)">
+    <div class="adm-modal" style="max-width:560px">
+      <div class="adm-modal-hd">
+        <h3 class="adm-modal-title" id="appt-detail-title">Appointment Details</h3>
+        <button class="adm-modal-close" onclick="closeAdmModal('modal-appt-detail')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="adm-modal-bd" id="appt-detail-body"></div>
+      <div class="adm-modal-ft">
+        <button class="adm-outline-btn" onclick="closeAdmModal('modal-appt-detail')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ CONFIRMATION MODAL ═══════ -->
+  <div class="adm-modal-bg" id="modal-confirm" onclick="closeAdmModal('modal-confirm', event)">
+    <div class="adm-modal" style="max-width:420px">
+      <div class="adm-modal-hd">
+        <h3 class="adm-modal-title" id="modal-confirm-title">Confirm</h3>
+        <button class="adm-modal-close" onclick="closeAdmModal('modal-confirm')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="adm-modal-bd">
+        <p class="adm-confirm-msg" id="modal-confirm-msg"></p>
+        <p style="font-size:0.78rem;color:var(--adm-text-mid);margin-top:8px">This action cannot be undone.</p>
+      </div>
+      <div class="adm-modal-ft">
+        <button class="adm-outline-btn" onclick="closeAdmModal('modal-confirm')">Cancel</button>
+        <button class="adm-primary-btn adm-btn-danger-solid" id="modal-confirm-action"><i class="fa fa-trash"></i> Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ CHANGE PASSWORD MODAL ═══════ -->
+  <div class="adm-modal-bg" id="modal-change-pw" onclick="closeAdmModal('modal-change-pw', event)">
+    <div class="adm-modal" style="max-width:440px">
+      <div class="adm-modal-hd">
+        <h3 class="adm-modal-title">Change Password</h3>
+        <button class="adm-modal-close" onclick="closeAdmModal('modal-change-pw')"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="adm-modal-bd">
+        <div class="adm-fg">
+          <label class="adm-flabel" for="chpw-current">Current Password <span class="adm-req">*</span></label>
+          <div class="adm-field-wrap">
+            <input type="password" class="adm-finput adm-finput-pr" id="chpw-current" placeholder="Your current password" autocomplete="current-password" />
+            <button type="button" class="adm-pw-eye" onclick="_togglePwField('chpw-current','chpw-cur-ico')" tabindex="-1" aria-label="Toggle visibility"><i class="fa fa-eye" id="chpw-cur-ico"></i></button>
+          </div>
+          <span class="adm-field-error" id="err-chpw-current"></span>
+        </div>
+        <div class="adm-fg">
+          <label class="adm-flabel" for="chpw-new">New Password <span class="adm-req">*</span></label>
+          <div class="adm-field-wrap">
+            <input type="password" class="adm-finput adm-finput-pr" id="chpw-new" placeholder="Min 8 chars · Upper · Lower · Number · Symbol" autocomplete="new-password" oninput="_updatePwStrength()" />
+            <button type="button" class="adm-pw-eye" onclick="_togglePwField('chpw-new','chpw-new-ico')" tabindex="-1" aria-label="Toggle visibility"><i class="fa fa-eye" id="chpw-new-ico"></i></button>
+          </div>
+          <div class="adm-pw-strength" id="adm-pw-strength" style="display:none">
+            <div class="adm-pw-bars">
+              <span class="adm-pw-bar" id="pw-bar-1"></span>
+              <span class="adm-pw-bar" id="pw-bar-2"></span>
+              <span class="adm-pw-bar" id="pw-bar-3"></span>
+              <span class="adm-pw-bar" id="pw-bar-4"></span>
+            </div>
+            <span class="adm-pw-label" id="adm-pw-label"></span>
+          </div>
+          <span class="adm-field-error" id="err-chpw-new"></span>
+        </div>
+        <div class="adm-fg" style="margin-bottom:0">
+          <label class="adm-flabel" for="chpw-confirm">Confirm New Password <span class="adm-req">*</span></label>
+          <div class="adm-field-wrap">
+            <input type="password" class="adm-finput adm-finput-pr" id="chpw-confirm" placeholder="Repeat new password" autocomplete="new-password" />
+            <button type="button" class="adm-pw-eye" onclick="_togglePwField('chpw-confirm','chpw-conf-ico')" tabindex="-1" aria-label="Toggle visibility"><i class="fa fa-eye" id="chpw-conf-ico"></i></button>
+          </div>
+          <span class="adm-field-error" id="err-chpw-confirm"></span>
+        </div>
+      </div>
+      <div class="adm-modal-ft">
+        <button class="adm-outline-btn" onclick="closeAdmModal('modal-change-pw')">Cancel</button>
+        <button class="adm-primary-btn" id="chpw-submit-btn" onclick="submitChangePassword()"><i class="fa fa-lock"></i> Change Password</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ TOAST CONTAINER ═══════ -->
+  <div id="adm-toast-container"></div>
+
+  <script src="admin.js"></script>
+
+  <!-- ═══════ ADMIN AI ASSISTANT (isolated from admin.js and from the customer AI in js/) ═══════ -->
+  <script src="ai/adminConfig.js"></script>
+  <script src="ai/adminUtils.js"></script>
+  <script src="ai/adminAI.js"></script>
+  <script src="ai/adminPrompts.js"></script>
+  <script src="ai/adminActions.js"></script>
+  <script src="ai/adminRouter.js"></script>
+  <script src="ai/adminChatbot.js"></script>
+</body>
+</html>

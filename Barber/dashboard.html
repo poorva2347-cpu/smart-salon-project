@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Salon — Barber Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="barber.css" />
+</head>
+<body>
+
+  <!-- ═══════ NAVBAR ═══════ -->
+  <nav id="br-navbar">
+    <div class="br-nav-left">
+      <button class="br-hamburger" id="br-hamburger" onclick="toggleSidebar()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a href="#" class="br-nav-logo">
+        <img src="../logo/smart-salon-logo-navy.svg" alt="Smart Salon" class="br-logo-img" />
+      </a>
+      <div class="br-nav-divider"></div>
+      <div class="br-avail-wrap">
+        <span class="br-avail-label">Availability</span>
+        <label class="br-toggle-switch">
+          <input type="checkbox" id="br-avail-toggle" checked onchange="toggleAvailability()" />
+          <span class="br-toggle-slider"></span>
+        </label>
+        <span class="br-avail-badge">
+          <span class="br-avail-dot available" id="br-avail-dot"></span>
+          <span id="br-avail-text">Available</span>
+        </span>
+      </div>
+    </div>
+    <div class="br-nav-right">
+      <button class="br-notif-btn" aria-label="Notifications" onclick="openNotifDrawer()">
+        <i class="fa fa-bell"></i>
+        <span class="br-notif-badge" id="br-notif-badge-count"></span>
+      </button>
+      <div class="br-barber-profile">
+        <div class="br-barber-avatar" id="br-nav-avatar">AS</div>
+        <div class="br-barber-info">
+          <div class="br-barber-name" id="br-nav-name">Atul Sharma</div>
+          <div class="br-barber-role">Senior Barber</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════ LAYOUT WRAPPER ═══════ -->
+  <div class="br-wrapper">
+
+    <!-- ═══════ SIDEBAR ═══════ -->
+    <aside id="br-sidebar">
+      <nav class="br-sidebar-nav">
+        <ul class="br-nav-menu">
+          <li>
+            <button class="br-nav-item active" onclick="switchSection('br-section-dashboard', this)">
+              <i class="fa fa-gauge-high"></i>
+              <span>Dashboard</span>
+            </button>
+          </li>
+          <li>
+            <button class="br-nav-item" onclick="switchSection('br-section-schedule', this)">
+              <i class="fa fa-calendar-days"></i>
+              <span>Schedule</span>
+            </button>
+          </li>
+          <li>
+            <button class="br-nav-item" onclick="switchSection('br-section-profile', this)">
+              <i class="fa fa-user"></i>
+              <span>Profile</span>
+            </button>
+          </li>
+        </ul>
+        <div class="br-sidebar-footer">
+          <button class="br-logout-btn" onclick="logoutBarber()">
+            <i class="fa fa-arrow-right-from-bracket"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Mobile Overlay -->
+    <div class="br-sidebar-overlay" id="br-sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- ═══════ MAIN ═══════ -->
+    <main id="br-main">
+
+      <!-- ══════════════════════════════════
+           DASHBOARD SECTION
+      ══════════════════════════════════ -->
+      <div id="br-section-dashboard" class="br-section active">
+
+        <!-- ── Greeting ── -->
+        <div class="br-greeting">
+          <div class="br-greeting-left">
+            <h1 class="br-greeting-title" id="br-greeting-text">Good Morning, Atul 👋</h1>
+            <p class="br-greeting-sub">Manage your appointment requests and daily schedule.</p>
+          </div>
+          <div class="br-greeting-date">
+            <i class="fa fa-calendar-days"></i>
+            <span id="br-date-text">Wednesday, 18 June 2026</span>
+          </div>
+        </div>
+
+        <!-- ── Segmented Work Tabs ── -->
+        <div class="br-tabs-wrap">
+          <div class="br-tabs" role="tablist">
+            <button class="br-tab-btn br-work-tab active" onclick="switchTab(this)" data-tab="requests" role="tab">
+              <span>Appointment Requests</span>
+              <span class="br-tab-count" id="br-count-requests">0</span>
+            </button>
+            <button class="br-tab-btn br-work-tab" onclick="switchTab(this)" data-tab="completed" role="tab">
+              <span>Completed</span>
+              <span class="br-tab-count" id="br-count-completed">0</span>
+            </button>
+            <button class="br-tab-btn br-work-tab" onclick="switchTab(this)" data-tab="history" role="tab">
+              <span>History</span>
+              <span class="br-tab-count" id="br-count-history">0</span>
+            </button>
+            <button class="br-tab-btn br-work-tab" onclick="switchTab(this)" data-tab="action" role="tab">
+              <span>Action Required</span>
+              <span class="br-tab-count" id="br-count-action">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Appointment Table ── -->
+        <div class="br-table-card">
+          <div class="br-table-wrap">
+            <table class="br-table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Service</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="br-work-tbody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- /br-section-dashboard -->
+
+
+      <!-- ══════════════════════════════════
+           SCHEDULE SECTION
+      ══════════════════════════════════ -->
+      <div id="br-section-schedule" class="br-section">
+
+        <!-- Header -->
+        <div class="br-greeting">
+          <div class="br-greeting-left">
+            <h1 class="br-greeting-title">Schedule</h1>
+            <p class="br-greeting-sub">View and manage your confirmed appointments.</p>
+          </div>
+          <div class="br-greeting-date">
+            <i class="fa fa-calendar-days"></i>
+            <span id="br-sched-date">Wednesday, 18 June 2026</span>
+          </div>
+        </div>
+
+        <!-- Schedule Tabs -->
+        <div class="br-tabs-wrap">
+          <div class="br-tabs" role="tablist">
+            <button class="br-tab-btn br-sched-tab active" onclick="switchSchedTab('br-sched-today', this)" role="tab">
+              Today
+            </button>
+            <button class="br-tab-btn br-sched-tab" onclick="switchSchedTab('br-sched-tomorrow', this)" role="tab">
+              Tomorrow
+            </button>
+            <button class="br-tab-btn br-sched-tab" onclick="switchSchedTab('br-sched-upcoming', this)" role="tab">
+              Upcoming
+            </button>
+          </div>
+        </div>
+
+        <!-- ──── TODAY ──── -->
+        <div id="br-sched-today" class="br-sched-panel active">
+          <div class="br-appt-list"></div>
+        </div><!-- /br-sched-today -->
+
+        <!-- ──── TOMORROW ──── -->
+        <div id="br-sched-tomorrow" class="br-sched-panel">
+          <div class="br-appt-list"></div>
+        </div><!-- /br-sched-tomorrow -->
+
+        <!-- ──── UPCOMING ──── -->
+        <div id="br-sched-upcoming" class="br-sched-panel">
+        </div><!-- /br-sched-upcoming -->
+
+      </div><!-- /br-section-schedule -->
+
+
+      <!-- ══════════════════════════════════
+           PROFILE SECTION
+      ══════════════════════════════════ -->
+      <div id="br-section-profile" class="br-section">
+
+        <!-- Header -->
+        <div class="br-greeting">
+          <div class="br-greeting-left">
+            <h1 class="br-greeting-title">Profile</h1>
+            <p class="br-greeting-sub">Manage your personal information and account settings.</p>
+          </div>
+        </div>
+
+        <div class="br-profile-grid">
+
+          <!-- ── Card 1: Personal Information ── -->
+          <div class="br-profile-card">
+            <div class="br-profile-card-header">
+              <h3 class="br-profile-card-title"><i class="fa fa-user"></i> Personal Information</h3>
+            </div>
+            <div class="br-profile-card-body">
+              <div class="br-profile-avatar-wrap">
+                <div class="br-profile-avatar" id="br-profile-avatar-el">AS</div>
+                <div>
+                  <div class="br-profile-avatar-name" id="br-profile-name-el">Atul Sharma</div>
+                  <div class="br-profile-avatar-role">Senior Barber</div>
+                </div>
+              </div>
+              <div class="br-profile-fields">
+                <div class="br-profile-field">
+                  <span class="br-profile-field-label"><i class="fa fa-user"></i> Full Name</span>
+                  <div class="br-profile-field-value" id="br-profile-fullname-val">Atul Sharma</div>
+                </div>
+                <div class="br-profile-field">
+                  <span class="br-profile-field-label"><i class="fa fa-envelope"></i> Email</span>
+                  <div class="br-profile-field-value" id="br-profile-email-val">atul@smartsalon.com</div>
+                </div>
+                <div class="br-profile-field">
+                  <span class="br-profile-field-label"><i class="fa fa-phone"></i> Phone</span>
+                  <div class="br-profile-field-value" id="br-profile-phone-val">+91 9876543210</div>
+                </div>
+                <div class="br-profile-field">
+                  <span class="br-profile-field-label"><i class="fa fa-scissors"></i> Specialization</span>
+                  <div class="br-profile-field-value">Hair Stylist &amp; Beard Expert</div>
+                </div>
+                <div class="br-profile-field">
+                  <span class="br-profile-field-label"><i class="fa fa-briefcase"></i> Experience</span>
+                  <div class="br-profile-field-value">6 Years</div>
+                </div>
+              </div>
+              <div class="br-profile-card-footer">
+                <button class="br-profile-edit-btn" onclick="openEditProfileModal()">
+                  <i class="fa fa-pen"></i> Edit Profile
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Card 2: Availability ── -->
+          <div class="br-profile-card">
+            <div class="br-profile-card-header">
+              <h3 class="br-profile-card-title"><i class="fa fa-circle-dot"></i> Availability</h3>
+            </div>
+            <div class="br-profile-card-body">
+              <div class="br-avail-setting-row">
+                <div class="br-avail-setting-info">
+                  <div class="br-avail-setting-label">Current Status</div>
+                  <div class="br-avail-setting-sub">Toggle your availability for new appointments</div>
+                </div>
+                <div class="br-avail-setting-ctrl">
+                  <label class="br-toggle-switch">
+                    <input type="checkbox" id="br-profile-avail-toggle" checked onchange="toggleProfileAvailability()" />
+                    <span class="br-toggle-slider"></span>
+                  </label>
+                  <span class="br-avail-badge">
+                    <span class="br-avail-dot available" id="br-profile-avail-dot"></span>
+                    <span id="br-profile-avail-text">Available</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /br-profile-grid -->
+
+      </div><!-- /br-section-profile -->
+
+    </main>
+  </div>
+
+  <!-- ═══════ APPOINTMENT DETAILS MODAL ═══════ -->
+  <div id="br-modal-overlay" class="br-modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="br-modal" id="br-modal" role="dialog" aria-modal="true" aria-labelledby="br-modal-name">
+
+      <!-- Header -->
+      <div class="br-modal-header">
+        <div class="br-modal-title-wrap">
+          <div class="br-modal-avatar" id="br-modal-avatar">AS</div>
+          <div class="br-modal-title-info">
+            <h2 class="br-modal-name" id="br-modal-name">Customer Name</h2>
+            <p class="br-modal-subtitle">Appointment Details</p>
+          </div>
+        </div>
+        <button class="br-modal-close" onclick="closeModal()" aria-label="Close">
+          <i class="fa fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="br-modal-body">
+        <div class="br-modal-grid">
+          <div class="br-modal-field">
+            <span class="br-modal-field-label"><i class="fa fa-phone"></i> Phone</span>
+            <span class="br-modal-field-value" id="br-modal-phone">—</span>
+          </div>
+          <div class="br-modal-field">
+            <span class="br-modal-field-label"><i class="fa fa-scissors"></i> Service</span>
+            <span class="br-modal-field-value" id="br-modal-service">—</span>
+          </div>
+          <div class="br-modal-field">
+            <span class="br-modal-field-label"><i class="fa fa-calendar-days"></i> Date</span>
+            <span class="br-modal-field-value" id="br-modal-date">—</span>
+          </div>
+          <div class="br-modal-field">
+            <span class="br-modal-field-label"><i class="fa fa-clock"></i> Time</span>
+            <span class="br-modal-field-value" id="br-modal-time">—</span>
+          </div>
+          <div class="br-modal-field">
+            <span class="br-modal-field-label"><i class="fa fa-indian-rupee-sign"></i> Advance Paid</span>
+            <span class="br-modal-field-value" id="br-modal-advance">—</span>
+          </div>
+          <div class="br-modal-field">
+            <span class="br-modal-field-label"><i class="fa fa-circle-info"></i> Status</span>
+            <span class="br-badge" id="br-modal-status">—</span>
+          </div>
+        </div>
+        <div id="br-modal-arrival-wrap" class="br-modal-arrival-wrap" style="display:none">
+          <span class="br-modal-field-label"><i class="fa fa-clock-rotate-left"></i> Arrival Status</span>
+          <span class="br-badge" id="br-modal-arrival-badge"></span>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="br-modal-footer" id="br-modal-footer"></div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ EDIT PROFILE MODAL ═══════ -->
+  <div id="br-edit-profile-overlay" class="br-modal-overlay" onclick="handleEditProfileOverlayClick(event)">
+    <div class="br-modal br-edit-profile-modal" id="br-edit-profile-modal" role="dialog" aria-modal="true" aria-labelledby="br-ep-title">
+
+      <!-- Header -->
+      <div class="br-modal-header">
+        <div class="br-modal-title-wrap">
+          <div class="br-modal-icon-wrap"><i class="fa fa-user-pen"></i></div>
+          <div class="br-modal-title-info">
+            <h2 class="br-modal-name" id="br-ep-title">Edit Profile</h2>
+            <p class="br-modal-subtitle">Update your personal information and account settings.</p>
+          </div>
+        </div>
+        <button class="br-modal-close" onclick="closeEditProfileModal()" aria-label="Close">
+          <i class="fa fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="br-modal-body br-ep-body">
+
+        <!-- Section 1: Profile Photo -->
+        <div class="br-ep-section">
+          <div class="br-ep-photo-row">
+            <div class="br-ep-avatar" id="br-ep-avatar-preview">AS</div>
+            <div class="br-ep-photo-info">
+              <div class="br-ep-photo-name" id="br-ep-photo-name-el">Atul Sharma</div>
+              <div class="br-ep-photo-role">Senior Barber</div>
+              <input type="file" id="br-ep-photo-input" accept="image/*" style="display:none" onchange="handlePhotoSelect(this)" />
+              <button class="br-ep-change-photo-btn" onclick="document.getElementById('br-ep-photo-input').click()">
+                <i class="fa fa-camera"></i> Upload New Photo
+              </button>
+              <div class="br-ep-photo-hint">Supported formats: JPG, PNG (Max 2 MB)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="br-ep-divider"></div>
+
+        <!-- Section 2: Personal Information -->
+        <div class="br-ep-section">
+          <h4 class="br-ep-section-title">Personal Information</h4>
+          <div class="br-ep-grid">
+            <div class="br-ep-field">
+              <label class="br-profile-field-label" for="br-ep-name"><i class="fa fa-user"></i> Full Name</label>
+              <input type="text" id="br-ep-name" class="br-profile-input" value="Atul Sharma" />
+            </div>
+            <div class="br-ep-field">
+              <label class="br-profile-field-label" for="br-ep-email"><i class="fa fa-envelope"></i> Email Address</label>
+              <input type="email" id="br-ep-email" class="br-profile-input" value="atul@smartsalon.com" />
+            </div>
+            <div class="br-ep-field">
+              <label class="br-profile-field-label" for="br-ep-phone"><i class="fa fa-phone"></i> Phone Number</label>
+              <input type="text" id="br-ep-phone" class="br-profile-input" value="+91 9876543210" />
+            </div>
+            <div class="br-ep-field">
+              <label class="br-profile-field-label" for="br-ep-spec"><i class="fa fa-scissors"></i> Specialization</label>
+              <input type="text" id="br-ep-spec" class="br-profile-input" value="Hair Stylist &amp; Beard Expert" />
+            </div>
+            <div class="br-ep-field br-ep-field--full">
+              <label class="br-profile-field-label" for="br-ep-exp"><i class="fa fa-briefcase"></i> Experience (Years)</label>
+              <input type="text" id="br-ep-exp" class="br-profile-input" value="6" />
+            </div>
+          </div>
+        </div>
+
+        <div class="br-ep-divider"></div>
+
+        <!-- Section 3: Account Security (accordion) -->
+        <div class="br-ep-section">
+          <button class="br-ep-accordion-toggle" onclick="toggleEpAccordion(this)" aria-expanded="false">
+            <span class="br-ep-accordion-label"><i class="fa fa-lock"></i> Change Password</span>
+            <i class="fa fa-chevron-down br-ep-accordion-icon"></i>
+          </button>
+          <div class="br-ep-accordion-body" id="br-ep-accordion-body">
+            <div class="br-ep-accordion-inner">
+              <div class="br-ep-field">
+                <label class="br-profile-field-label" for="br-ep-curr-pw"><i class="fa fa-lock"></i> Current Password</label>
+                <input type="password" id="br-ep-curr-pw" class="br-profile-input" placeholder="Enter current password" />
+              </div>
+              <div class="br-ep-grid">
+                <div class="br-ep-field">
+                  <label class="br-profile-field-label" for="br-ep-new-pw"><i class="fa fa-key"></i> New Password</label>
+                  <input type="password" id="br-ep-new-pw" class="br-profile-input" placeholder="Enter new password" />
+                </div>
+                <div class="br-ep-field">
+                  <label class="br-profile-field-label" for="br-ep-confirm-pw"><i class="fa fa-key"></i> Confirm New Password</label>
+                  <input type="password" id="br-ep-confirm-pw" class="br-profile-input" placeholder="Confirm new password" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="br-ep-divider"></div>
+
+        <!-- Section 4: Availability -->
+        <div class="br-ep-section">
+          <h4 class="br-ep-section-title">Availability Settings</h4>
+          <div class="br-avail-setting-row">
+            <div class="br-avail-setting-info">
+              <div class="br-avail-setting-label">Current Status</div>
+              <div class="br-avail-setting-sub">Toggle your availability for new appointments</div>
+            </div>
+            <div class="br-avail-setting-ctrl">
+              <label class="br-toggle-switch">
+                <input type="checkbox" id="br-ep-avail-toggle" checked onchange="toggleEpAvailability()" />
+                <span class="br-toggle-slider"></span>
+              </label>
+              <span class="br-avail-badge">
+                <span class="br-avail-dot available" id="br-ep-avail-dot"></span>
+                <span id="br-ep-avail-text">Available</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="br-modal-footer">
+        <button class="br-modal-btn br-modal-btn-neutral" onclick="closeEditProfileModal()"><i class="fa fa-xmark"></i> Cancel</button>
+        <button class="br-modal-btn br-modal-btn-accept" onclick="submitEditProfile()"><i class="fa fa-check"></i> Save Changes</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ REJECT CONFIRM MODAL ═══════ -->
+  <div id="br-reject-overlay" class="br-modal-overlay br-upper-overlay" onclick="handleRejectOverlayClick(event)">
+    <div class="br-confirm-modal" role="dialog">
+      <div class="br-confirm-icon"><i class="fa fa-triangle-exclamation"></i></div>
+      <h3 class="br-confirm-title">Reject Appointment?</h3>
+      <p class="br-confirm-text">This appointment will be removed permanently. This action cannot be undone.</p>
+      <div class="br-confirm-footer">
+        <button class="br-modal-btn br-modal-btn-neutral" onclick="closeRejectConfirm()">Cancel</button>
+        <button class="br-modal-btn br-modal-btn-reject" onclick="confirmReject()"><i class="fa fa-xmark"></i> Reject Appointment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ COMPLETE CONFIRM MODAL ═══════ -->
+  <div id="br-complete-overlay" class="br-modal-overlay br-upper-overlay" onclick="handleCompleteOverlayClick(event)">
+    <div class="br-confirm-modal" role="dialog">
+      <div class="br-confirm-icon br-confirm-icon--success"><i class="fa fa-circle-check"></i></div>
+      <h3 class="br-confirm-title">Mark as Completed?</h3>
+      <p class="br-confirm-text">This will mark the appointment as completed and move it to your Completed history.</p>
+      <div class="br-confirm-footer">
+        <button class="br-modal-btn br-modal-btn-neutral" onclick="closeCompleteConfirm()">Cancel</button>
+        <button class="br-modal-btn br-modal-btn-accept" onclick="confirmComplete()"><i class="fa fa-circle-check"></i> Mark Completed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ NO SHOW CONFIRM MODAL ═══════ -->
+  <div id="br-noshow-overlay" class="br-modal-overlay br-upper-overlay" onclick="handleNoShowOverlayClick(event)">
+    <div class="br-confirm-modal" role="dialog">
+      <div class="br-confirm-icon br-confirm-icon--noshow"><i class="fa fa-user-slash"></i></div>
+      <h3 class="br-confirm-title">Customer Did Not Arrive?</h3>
+      <p class="br-confirm-text">This will mark the appointment as a No Show and move it to your Completed history.</p>
+      <div class="br-confirm-footer">
+        <button class="br-modal-btn br-modal-btn-neutral" onclick="closeNoShowConfirm()">Cancel</button>
+        <button class="br-modal-btn br-modal-btn-noshow" onclick="confirmNoShow()"><i class="fa fa-user-slash"></i> Mark No Show</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ RESCHEDULE MODAL ═══════ -->
+  <div id="br-reschedule-overlay" class="br-modal-overlay br-upper-overlay" onclick="handleRescheduleOverlayClick(event)">
+    <div class="br-modal" id="br-reschedule-modal" role="dialog">
+
+      <div class="br-modal-header">
+        <div class="br-modal-title-wrap">
+          <div class="br-modal-icon-wrap"><i class="fa fa-calendar-days"></i></div>
+          <div class="br-modal-title-info">
+            <h2 class="br-modal-name">Propose Reschedule</h2>
+            <p class="br-modal-subtitle" id="br-reschedule-customer-name">—</p>
+          </div>
+        </div>
+        <button class="br-modal-close" onclick="closeRescheduleModal()" aria-label="Close">
+          <i class="fa fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="br-modal-body">
+        <div class="br-reschedule-current">
+          <span class="br-modal-field-label"><i class="fa fa-clock"></i> Current Appointment</span>
+          <div class="br-reschedule-current-val" id="br-reschedule-current-val">—</div>
+        </div>
+        <div class="br-modal-grid br-reschedule-grid">
+          <div class="br-modal-field">
+            <label class="br-modal-field-label" for="br-new-date"><i class="fa fa-calendar-days"></i> New Date</label>
+            <input type="date" id="br-new-date" class="br-reschedule-input" />
+          </div>
+          <div class="br-modal-field">
+            <label class="br-modal-field-label" for="br-new-time"><i class="fa fa-clock"></i> New Time</label>
+            <input type="time" id="br-new-time" class="br-reschedule-input" />
+          </div>
+        </div>
+        <div class="br-modal-field br-reason-field">
+          <label class="br-modal-field-label" for="br-reschedule-reason"><i class="fa fa-comment"></i> Reason (Optional)</label>
+          <textarea id="br-reschedule-reason" class="br-reschedule-textarea" placeholder="Explain why you'd like to reschedule..."></textarea>
+        </div>
+      </div>
+
+      <div class="br-modal-footer">
+        <button class="br-modal-btn br-modal-btn-neutral" onclick="closeRescheduleModal()"><i class="fa fa-xmark"></i> Cancel</button>
+        <button class="br-modal-btn br-modal-btn-accept" onclick="submitReschedule()"><i class="fa fa-paper-plane"></i> Send Request</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ NOTIFICATION DRAWER ═══════ -->
+  <div id="br-notif-overlay" class="br-notif-overlay" onclick="handleNotifOverlayClick(event)"></div>
+  <aside id="br-notif-drawer" class="br-notif-drawer" role="dialog" aria-label="Notifications" aria-modal="true">
+    <div class="br-notif-drawer-header">
+      <h2 class="br-notif-drawer-title">Notifications</h2>
+      <div class="br-notif-drawer-actions">
+        <button class="br-notif-mark-all-btn" id="br-notif-mark-all-btn" onclick="markAllRead()">Mark All Read</button>
+        <button class="br-notif-drawer-close" onclick="closeNotifDrawer()" aria-label="Close notifications">
+          <i class="fa fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+    <div class="br-notif-list" id="br-notif-list"></div>
+  </aside>
+
+  <!-- ═══════ TOAST ═══════ -->
+  <div id="br-toast-container" class="br-toast-container"></div>
+
+  <script src="barber.js"></script>
+</body>
+</html>

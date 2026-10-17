@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Salon — Barber Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="barber.css" />
+</head>
+<body class="br-login-page">
+
+  <div class="br-login-wrap">
+
+    <!-- ═══════ LEFT BRAND PANEL ═══════ -->
+    <div class="br-login-panel">
+      <div class="br-login-brand">
+        <img src="../logo/smart-salon-logo-white.svg" alt="Smart Salon" class="br-login-logo" />
+        <div class="br-login-tagline">Barber<br>Portal</div>
+        <p class="br-login-brand-sub">Manage appointments, customer requests, and your daily schedule efficiently.</p>
+      </div>
+      <div class="br-login-features">
+        <div class="br-login-feat">
+          <span class="br-login-feat-ico"><i class="fa fa-calendar-check"></i></span>
+          <span>Review Appointment Requests</span>
+        </div>
+        <div class="br-login-feat">
+          <span class="br-login-feat-ico"><i class="fa fa-clock"></i></span>
+          <span>Manage Daily Schedule</span>
+        </div>
+        <div class="br-login-feat">
+          <span class="br-login-feat-ico"><i class="fa fa-circle-check"></i></span>
+          <span>Track Completed Services</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ RIGHT FORM AREA ═══════ -->
+    <div class="br-login-form-area">
+      <div class="br-login-card">
+
+        <div class="br-login-card-top">
+          <div class="br-login-icon-wrap">
+            <i class="fa fa-scissors"></i>
+          </div>
+          <h1 class="br-login-title">Barber Portal</h1>
+          <p class="br-login-subtitle">Welcome back. Sign in to start your shift.</p>
+        </div>
+
+        <form id="br-login-form" onsubmit="handleLogin(event)" novalidate>
+
+          <div class="br-fg">
+            <label class="br-flabel" for="br-email">Email Address</label>
+            <div class="br-field-wrap">
+              <i class="fa fa-envelope br-field-ico"></i>
+              <input
+                type="email"
+                class="br-finput br-finput-padded"
+                id="br-email"
+                placeholder="you@smartsalon.in"
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <div class="br-fg">
+            <label class="br-flabel" for="br-password">Password</label>
+            <div class="br-field-wrap">
+              <i class="fa fa-lock br-field-ico"></i>
+              <input
+                type="password"
+                class="br-finput br-finput-padded br-finput-pr"
+                id="br-password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+              />
+              <button type="button" class="br-pw-eye" id="br-pw-eye" onclick="togglePw()" tabindex="-1" aria-label="Toggle password visibility">
+                <i class="fa fa-eye" id="br-eye-ico"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="br-login-submit">
+            <i class="fa fa-right-to-bracket"></i>
+            Sign In
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div id="br-toast-container"></div>
+
+  <script src="barber.js"></script>
+
+</body>
+</html>

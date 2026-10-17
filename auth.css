@@ -1,0 +1,407 @@
+/* ══════════════════════════════════════════
+   SMART SALON — auth.css
+   Authentication Pages Stylesheet
+   Matches existing Smart Salon design system
+══════════════════════════════════════════ */
+
+/* ─── Design Tokens (mirrored from style.css) ─── */
+:root {
+  --primary:    #213555;
+  --secondary:  #3E5879;
+  --bg:         #F5EFE7;
+  --bg-card:    #FFFFFF;
+  --text-dark:  #1A1A1A;
+  --text-mid:   #4A5568;
+  --text-light: #FFFFFF;
+  --border:     #E2D9CE;
+  --shadow:     0 4px 24px rgba(33, 53, 85, 0.10);
+  --shadow-lg:  0 12px 48px rgba(33, 53, 85, 0.15);
+  --radius:     14px;
+  --radius-sm:  9px;
+  --transition: all 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Reset & Base ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  line-height: 1.65;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  border: none;
+  outline: none;
+}
+
+/* ══════════════════════════════════════════
+   PAGE LAYOUT
+══════════════════════════════════════════ */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  position: relative;
+}
+
+/* ══════════════════════════════════════════
+   CARD
+══════════════════════════════════════════ */
+.auth-card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 44px 44px 36px;
+  animation: authFadeUp 0.42s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes authFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Card Brand ─── */
+.auth-brand {
+  text-align: center;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.auth-brand-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.auth-logo-img {
+  height: 120px;
+  width: auto;
+}
+
+.auth-brand-tagline {
+  font-size: 0.74rem;
+  color: var(--text-mid);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Heading ─── */
+.auth-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin-bottom: 7px;
+}
+
+.auth-subtitle {
+  font-size: 0.87rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════
+   FORM
+══════════════════════════════════════════ */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form Group */
+.auth-fg {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Label */
+.auth-label {
+  display: block;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+}
+
+/* Input Wrapper */
+.auth-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: 13px;
+  font-size: 0.8rem;
+  color: var(--text-mid);
+  pointer-events: none;
+  opacity: 0.55;
+  transition: opacity 0.25s ease, color 0.25s ease;
+  z-index: 1;
+}
+
+.auth-input-wrap:focus-within .auth-input-icon {
+  color: var(--secondary);
+  opacity: 0.85;
+}
+
+/* Input */
+.auth-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  padding: 11px 13px 11px 36px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.87rem;
+  color: var(--text-dark);
+  outline: none;
+  transition: var(--transition);
+  appearance: none;
+}
+
+.auth-input::placeholder {
+  color: #b5aca3;
+  font-size: 0.84rem;
+}
+
+.auth-input:focus {
+  border-color: var(--secondary);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(62, 88, 121, 0.10);
+}
+
+/* Input with eye button on right */
+.auth-input.has-eye {
+  padding-right: 42px;
+}
+
+/* Eye / Show-password button */
+.auth-eye-btn {
+  position: absolute;
+  right: 11px;
+  background: none;
+  border: none;
+  color: var(--text-mid);
+  font-size: 0.8rem;
+  padding: 5px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-eye-btn:hover {
+  opacity: 1;
+  color: var(--secondary);
+}
+
+.auth-eye-btn:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+  border-radius: 4px;
+  opacity: 1;
+}
+
+/* ─── Error State ─── */
+.auth-fg.has-error .auth-input {
+  border-color: #e74c3c;
+  background: #fff;
+}
+
+.auth-fg.has-error .auth-input:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.09);
+}
+
+.auth-fg.has-error .auth-input-icon {
+  color: #e74c3c;
+  opacity: 0.7;
+}
+
+.auth-error {
+  display: block;
+  font-size: 0.76rem;
+  color: #c0392b;
+  font-weight: 500;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.26s ease, opacity 0.26s ease;
+}
+
+.auth-error.visible {
+  max-height: 48px;
+  opacity: 1;
+}
+
+/* ─── Section Label (password section divider in register) ─── */
+.auth-section-label {
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  margin-top: 2px;
+}
+
+/* ══════════════════════════════════════════
+   PRIMARY BUTTON
+══════════════════════════════════════════ */
+.auth-btn-primary {
+  width: 100%;
+  background: var(--primary);
+  color: var(--text-light);
+  padding: 13px;
+  border-radius: 11px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 4px;
+  letter-spacing: 0.01em;
+  position: relative;
+}
+
+.auth-btn-primary:hover {
+  background: var(--secondary);
+  box-shadow: 0 6px 20px rgba(33, 53, 85, 0.25);
+  transform: translateY(-1px);
+}
+
+.auth-btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.auth-btn-primary:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
+}
+
+.auth-btn-primary.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════
+   SUCCESS MESSAGE
+══════════════════════════════════════════ */
+.auth-success-msg {
+  background: #e8f5e9;
+  border: 1.5px solid #81c784;
+  border-radius: var(--radius-sm);
+  color: #2e7d32;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 14px 16px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════
+   CARD FOOTER
+══════════════════════════════════════════ */
+.auth-footer {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.auth-footer-text {
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  text-align: center;
+}
+
+.auth-link {
+  color: var(--primary);
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.auth-link:hover {
+  color: var(--secondary);
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 640px) {
+  .auth-card {
+    max-width: 100%;
+    padding: 36px 28px 30px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 32px 16px 40px;
+  }
+
+  .auth-card {
+    padding: 28px 20px 24px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+  }
+
+  .auth-title {
+    font-size: 1.35rem;
+  }
+
+  .auth-brand-logo {
+    font-size: 1.25rem;
+  }
+}

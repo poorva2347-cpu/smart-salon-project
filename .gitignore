@@ -1,0 +1,48 @@
+﻿# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Build outputs and test coverage
+dist/
+build/
+coverage/
+.cache/
+.tmp/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor settings
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Local database files and backups
+*.sqlite
+*.sqlite3
+*.db
+*.sql.bak
+
+# Downloaded webpage and its bundled assets
+The_Smart_Salon/Images/Low angle of man at the hair salon _ Free Photo.html
+The_Smart_Salon/Images/Low angle of man at the hair salon _ Free Photo_files/
+
+# Runtime-uploaded images
+backend/uploads/
+
+backend/config/db.js
